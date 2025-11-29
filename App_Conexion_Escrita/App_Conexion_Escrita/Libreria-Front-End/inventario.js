@@ -3,8 +3,8 @@ const API_BASE = "http://127.0.0.1:8000";
 // Carga el inventario desde el backend
 async function cargarInventario(q = "") {
   const tbody = document.getElementById("tabla-libros");
-  // Ahora son 6 columnas: ID Inv., Libro, Punto de Venta, Stock, Stock Mínimo, Acciones
-  tbody.innerHTML = "<tr><td colspan='6'>Cargando...</td></tr>"; // <-- Colspan ajustado
+  // 6 columnas: ID, Libro, Categoría, Stock, Precio, Acciones
+  tbody.innerHTML = "<tr><td colspan='6'>Cargando...</td></tr>";
 
   let url = `${API_BASE}/inventario/`;
   if (q) {
@@ -21,35 +21,27 @@ async function cargarInventario(q = "") {
     tbody.innerHTML = "";
 
     if (!items.length) {
-      tbody.innerHTML = "<tr><td colspan='6'>Sin resultados</td></tr>"; // <-- Colspan ajustado
+      tbody.innerHTML = "<tr><td colspan='6'>Sin resultados</td></tr>";
       return;
     }
 
-    // Valores de ejemplo, ya que estos datos no se devuelven actualmente por la API /inventario
-    const puntoVentaEjemplo = "Librería Central";
-    const stockMinimoEjemplo = 10;
-
     items.forEach((item) => {
-      // Nota: asumimos que el campo 'nombre' del libro está disponible en el objeto 'item'
-      // Esto requiere una modificación del backend (inventario.py y schemas.py) para funcionar correctamente.
-      const nombreLibro = item.nombre || "Libro ID: " + item.libro_id;
-      
       const tr = document.createElement("tr");
       tr.innerHTML = `
         <td>${item.id_inventario}</td>
-        <td>${nombreLibro}</td>
-        <td>${puntoVentaEjemplo}</td>
+        <td>${item.libro_nombre}</td>
+        <td>${item.categoria || ""}</td>
         <td>${item.stock}</td>
-        <td>${stockMinimoEjemplo}</td>
+        <td>${item.precio != null ? "$" + item.precio : "—"}</td>
         <td>
           <a class="link" href="#" onclick="venderLibro(${item.id_inventario}); return false;">Vender</a>
         </td>
-      `; // Ahora son 6 <td>
+      `;
       tbody.appendChild(tr);
     });
   } catch (e) {
     console.error(e);
-    tbody.innerHTML = "<tr><td colspan='6'>Error al cargar inventario</td></tr>"; // <-- Colspan ajustado
+    tbody.innerHTML = "<tr><td colspan='6'>Error al cargar inventario</td></tr>";
   }
 }
 

@@ -74,18 +74,14 @@ img {
   text-align: center;
 }
 
-/* -------- Topbar (Fijo/Sticky) -------- */
+/* -------- Topbar -------- */
 .topbar {
   background: #fff;
   box-shadow: var(--shadow);
   padding: 10px 0;
-  
-  /* REGLAS PARA BARRA FIJA GARANTIZADA (position: fixed) */
-  position: fixed; 
-  top: 0;           
-  left: 0;           
-  right: 0;          
-  z-index: 100;      
+  position: sticky;
+  top: 0;
+  z-index: 10;
 }
 
 .topbar-inner {
@@ -204,13 +200,6 @@ img {
 }
 
 /* -------- Dashboard Layout -------- */
-
-/* Compensación para la barra de navegación fija */
-main.container {
-    padding-top: 60px; 
-}
-
-
 .dashboard-grid {
   display: grid;
   grid-template-columns: 260px 1fr 320px;
@@ -361,40 +350,6 @@ main.container {
   font-size: 13px;
 }
 
-/* ===============================
-   NUEVAS CLASES PARA ALERTAS (ADMIN.HTML)
-   =============================== */
-
-/* Asegurar que la grilla de contenido de la alerta se divida en dos */
-.alert-content-grid {
-    display: flex;
-    gap: 20px;
-    padding-top: 10px;
-}
-
-/* Hacer que cada sección ocupe la mitad */
-.alert-section {
-    flex: 1;
-    padding: 0 10px;
-}
-
-/* Títulos más pequeños para las secciones de alerta */
-.alert-section h4 {
-    margin-top: 0;
-    margin-bottom: 8px;
-    font-size: 14px;
-    color: var(--muted);
-}
-
-/* Lista simple y compacta para las alertas */
-.alert-list {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    font-size: 14px;
-    line-height: 1.6;
-}
-
 /* -------- Responsive Design -------- */
 
 /* Tablets */
@@ -404,11 +359,6 @@ main.container {
   }
 
   .panel.wide {
-    grid-column: 1 / -1;
-  }
-  
-  /* Asegurar que el panel de alerta también sea ancho en tablets */
-  .alert-panel {
     grid-column: 1 / -1;
   }
 
@@ -460,21 +410,4 @@ main.container {
   .btn, .btn.primary, .btn.ghost {
     width: 100%;
   }
-
-  /* NUEVO: En móviles, apilar las secciones de alerta */
-  .alert-content-grid {
-      flex-direction: column;
-  }
-  .alert-section:first-child {
-      border-right: none;
-      padding-bottom: 12px;
-      border-bottom: 1px solid rgba(15, 23, 36, 0.08);
-  }
-}
-
-/* Separador visual entre las dos secciones de alerta en pantallas grandes */
-@media (min-width: 768px) {
-    .alert-section:first-child {
-        border-right: 1px solid rgba(15, 23, 36, 0.08);
-    }
 }

@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
 <head>
   <meta charset="utf-8" />
@@ -14,12 +14,13 @@
         <span class="muted small">Conexión Escrita</span>
       </div>
       <nav class="nav">
-        <a href="admin.html">Dashboard</a>
-        <a href="inventario.html" class="active">Inventario</a>
-        <a href="usuarios.html">Usuarios</a>
-        <a href="materias_primas.html">Materias Primas</a>
-        <a href="puntos_venta.html">Puntos de venta</a>
-        <a href="libros.html">Libros</a>
+        <a href="#" id="btnVolver">Volver</a>
+<script>
+  const rol = localStorage.getItem("userRole") || "user";
+  const volver = document.getElementById("btnVolver");
+  volver.href = rol === "admin" ? "admin.html" : "user.html";
+</script>
+
         <a href="#" class="btn-sm ghost" onclick="logout()">Salir</a>
       </nav>
     </div>
@@ -30,8 +31,13 @@
       <div class="panel-row">
         <h3>Filtro / Búsqueda</h3>
         <form id="filterForm" class="form-inline" method="GET" action="/inventario">
-          <input name="q" placeholder="Buscar" />
-          
+          <input name="q" placeholder="Buscar título, autor, ISBN" />
+          <select name="category">
+            <option value="">Todas las categorías</option>
+            <option>Infantil</option>
+            <option>Ficción</option>
+            <option>Académico</option>
+          </select>
           <button class="btn">Buscar</button>
         </form>
       </div>
@@ -40,17 +46,39 @@
         <table class="table">
           <thead>
             <tr>
-              <th>ID Inv.</th>
+              <th>ID Inventario</th>
               <th>Libro</th>
-              <th>Punto de Venta</th>
+              <th>Categoría</th>
               <th>Stock</th>
-              <th>Stock Mínimo</th>
+              <th>Precio</th>
               <th>Acciones</th>
             </tr>
           </thead>
           <tbody id="tabla-libros">
+            <!-- Backend: renderizar filas reales -->
             <tr>
-              <td colspan='6'>Cargando inventario...</td>
+              <td>El Principito</td>
+              <td>Antoine de Saint-Exupéry</td>
+              <td>978-xxxx</td>
+              <td>Infantil</td>
+              <td>34</td>
+              <td>$7.990</td>
+              <td>
+                <a class="link" href="#" onclick="alert('Editar (abrir modal)')">Editar</a>
+                <a class="link" href="#" onclick="alert('Registrar venta (abrir modal)')">Vender</a>
+              </td>
+            </tr>
+            <tr>
+              <td>Cien años de soledad</td>
+              <td>Gabriel García Márquez</td>
+              <td>978-yyyy</td>
+              <td>Ficción</td>
+              <td>12</td>
+              <td>$12.990</td>
+              <td>
+                <a class="link" href="#">Editar</a>
+                <a class="link" href="#">Vender</a>
+              </td>
             </tr>
           </tbody>
         </table>
